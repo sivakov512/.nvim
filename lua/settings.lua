@@ -1,6 +1,7 @@
 local opt = vim.opt
 local cmd = vim.cmd
 
+
 cmd('colorscheme darcula')
 opt.cursorline = true
 opt.number = true
@@ -19,3 +20,14 @@ opt.expandtab = true
 opt.shiftwidth = tab_width
 opt.tabstop = tab_width
 opt.smartindent = true
+
+opt.foldmethod = 'expr'
+opt.foldexpr = 'nvim_treesitter#foldexpr()'
+
+
+require('nvim-treesitter.configs').setup {
+    ensure_installed = 'all',
+    highlight = { enable = true },
+    textobjects = { enable = true },
+    indent = { enable = true },
+}

@@ -5,4 +5,8 @@ return require('packer').startup(function()
 
     use 'tpope/vim-surround'
     use 'cohama/lexima.vim'
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    }
 end)
