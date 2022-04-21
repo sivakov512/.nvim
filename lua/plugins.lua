@@ -17,6 +17,8 @@ require('packer').startup(function()
             { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
         },
     }
+
+    use 'neovim/nvim-lspconfig'
 end)
 
 require('telescope').load_extension('fzf')
