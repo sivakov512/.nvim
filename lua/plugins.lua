@@ -10,6 +10,9 @@ require('packer').startup(function()
         run = ':TSUpdate'
     }
 
+    use 'aklt/plantuml-syntax'
+    use 'weirongxu/plantuml-previewer.vim'
+
     use {
         'nvim-telescope/telescope.nvim',
         requires = {
@@ -17,6 +20,7 @@ require('packer').startup(function()
             { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
         },
     }
+    use 'tyru/open-browser.vim'
 
     use 'neovim/nvim-lspconfig'
 end)
