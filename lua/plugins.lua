@@ -4,6 +4,7 @@ require('packer').startup(function()
     use 'doums/darcula'
 
     use 'tpope/vim-surround'
+    use 'terrortylor/nvim-comment'
     use 'cohama/lexima.vim'
     use {
         'nvim-treesitter/nvim-treesitter',

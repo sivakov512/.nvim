@@ -43,3 +43,7 @@ for _, lsp in pairs { 'pylsp' } do
     }
   }
 end
+
+
+map('n', [[<C-\>]], '<cmd>CommentToggle<cr>j', default_opts)
+map('v', [[<C-\>]], [[:CommentToggle<cr>]], default_opts)

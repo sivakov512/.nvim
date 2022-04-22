@@ -31,3 +31,8 @@ require('nvim-treesitter.configs').setup {
     textobjects = { enable = true },
     indent = { enable = true },
 }
+
+
+require('nvim_comment').setup {
+    create_mappings = false,
+}
