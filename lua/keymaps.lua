@@ -14,6 +14,8 @@ map('i', '<C-f>', '<Right>', default_opts)
 map('i', '<C-b>', '<Left>', default_opts)
 map('i', '<C-p>', '<Up>', default_opts)
 map('i', '<C-n>', '<Down>', default_opts)
+map('c', '<C-f>', '<Right>', { noremap = true, silent = false })
+map('c', '<C-b>', '<Left>', { noremap = true, silent = false })
 
 
 map('n', [[<C-\>]], '<cmd>CommentToggle<cr>j', default_opts)
