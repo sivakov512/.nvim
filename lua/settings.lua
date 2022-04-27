@@ -31,7 +31,7 @@ require('nvim-treesitter.configs').setup {
     ensure_installed = 'all',
     highlight = { enable = true },
     textobjects = { enable = true },
-    indent = { enable = true },
+    indent = { enable = false },  -- https://github.com/nvim-treesitter/nvim-treesitter/issues/1136
 }
 
 
