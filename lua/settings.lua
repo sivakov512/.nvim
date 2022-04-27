@@ -24,6 +24,8 @@ opt.smartindent = true
 opt.foldmethod = 'expr'
 opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
+opt.completeopt = 'menu'
+
 
 require('nvim-treesitter.configs').setup {
     ensure_installed = 'all',
