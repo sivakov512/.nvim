@@ -17,6 +17,12 @@ local lsp_on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', default_opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', default_opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>i', '<cmd>lua vim.lsp.buf.formatting()<CR>', default_opts)
+
+    require('lsp_signature').on_attach {
+        handler_opts = {
+            border = 'none',
+        }
+    }
 end
 
 for _, lsp in pairs { 'pylsp', 'gopls' } do
