@@ -24,6 +24,7 @@ require('packer').startup(function()
     use 'tyru/open-browser.vim'
 
     use 'neovim/nvim-lspconfig'
+    use 'jose-elias-alvarez/null-ls.nvim'
 end)
 
 require('telescope').load_extension('fzf')

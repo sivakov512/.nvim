@@ -7,6 +7,7 @@ vim.g.mapleader = [[\]]
 map('n', '<C-b>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], default_opts)
 map('n', '<C-f>', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], default_opts)
 map('n', '<C-s>', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], default_opts)
+map('n', '<C-e>', [[<cmd>lua require('telescope.builtin').diagnostics()<cr>]], default_opts)
 
 map('n', '<leader>e', '<cmd>e %:h<cr>', default_opts)
 

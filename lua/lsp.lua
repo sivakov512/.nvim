@@ -27,3 +27,5 @@ for _, lsp in pairs { 'pylsp', 'gopls' } do
     }
   }
 end
+
+vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end

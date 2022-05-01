@@ -38,3 +38,27 @@ require('nvim-treesitter.configs').setup {
 require('nvim_comment').setup {
     create_mappings = false,
 }
+
+
+local null_ls = require('null-ls')
+null_ls.setup {
+    sources = {
+        -- python
+        null_ls.builtins.diagnostics.flake8,
+        null_ls.builtins.formatting.isort,
+        null_ls.builtins.formatting.black,
+        null_ls.builtins.diagnostics.mypy,
+        -- yaml, json
+        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.diagnostics.yamllint,
+        null_ls.builtins.diagnostics.jsonlint,
+        -- golang
+        null_ls.builtins.diagnostics.golangci_lint,
+        null_ls.builtins.formatting.gofmt,
+        null_ls.builtins.formatting.goimports,
+        -- lua
+        null_ls.builtins.diagnostics.luacheck,
+        -- protobuf
+        null_ls.builtins.formatting.protolint,
+    }
+}
