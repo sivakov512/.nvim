@@ -60,6 +60,7 @@ null_ls.setup {
         -- lua
         null_ls.builtins.diagnostics.luacheck,
         -- protobuf
+        null_ls.builtins.diagnostics.protolint,
         null_ls.builtins.formatting.protolint,
     }
 }
