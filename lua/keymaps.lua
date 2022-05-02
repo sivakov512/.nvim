@@ -10,6 +10,7 @@ map('n', '<C-s>', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], def
 map('n', '<C-e>', [[<cmd>lua require('telescope.builtin').diagnostics()<cr>]], default_opts)
 
 map('n', '<leader>e', '<cmd>e %:h<cr>', default_opts)
+map('n', ',/', '<cmd>nohlsearch<cr>', default_opts)
 
 map('i', '<C-f>', '<Right>', default_opts)
 map('i', '<C-b>', '<Left>', default_opts)
