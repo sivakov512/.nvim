@@ -1,22 +1,25 @@
 local util = require('vim.lsp.util')
-local default_opts = { noremap = true, silent = true }
 
 local lsp_on_attach = function(client, bufnr)
+    local nmap = function(lhs, rhf)
+        vim.keymap.set('n', lhs, rhf, { buffer = bufnr, silent = true, noremap = true })
+    end
+
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     for _, goto_declaration_cmd in pairs { 'gD', '<C-[>' } do
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', goto_declaration_cmd, '<cmd>lua vim.lsp.buf.declaration()<CR>', default_opts)
+        nmap(goto_declaration_cmd, vim.lsp.buf.declaration)
     end
     for _, goto_definition_cmd in pairs { 'gd', '<C-]>' } do
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', goto_definition_cmd, '<cmd>lua vim.lsp.buf.definition()<CR>', default_opts)
+        nmap(goto_definition_cmd, vim.lsp.buf.definition)
     end
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', default_opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', default_opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', default_opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', default_opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', default_opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', default_opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', default_opts)
+    nmap('K', vim.lsp.buf.hover)
+    nmap('gi', vim.lsp.buf.implementation)
+    nmap('<C-k>', vim.lsp.buf.signature_help)
+    nmap('gt', vim.lsp.buf.type_definition)
+    nmap('<leader>rn', vim.lsp.buf.rename)
+    nmap('<leader>ca', vim.lsp.buf.code_action)
+    nmap('gr', vim.lsp.buf.references)
 
     require('lsp_signature').on_attach {
         handler_opts = {
