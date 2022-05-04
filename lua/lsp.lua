@@ -1,3 +1,4 @@
+local util = require('vim.lsp.util')
 local default_opts = { noremap = true, silent = true }
 
 local lsp_on_attach = function(client, bufnr)
@@ -16,7 +17,6 @@ local lsp_on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', default_opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', default_opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', default_opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>i', '<cmd>lua vim.lsp.buf.formatting()<CR>', default_opts)
 
     require('lsp_signature').on_attach {
         handler_opts = {
@@ -35,3 +35,34 @@ for _, lsp in pairs { 'pylsp', 'gopls' } do
 end
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
+
+
+local null_ls = require('null-ls')
+null_ls.setup {
+    sources = {
+        -- python
+        null_ls.builtins.diagnostics.flake8,
+        null_ls.builtins.formatting.isort,
+        null_ls.builtins.formatting.black,
+        null_ls.builtins.diagnostics.mypy,
+        -- yaml, json
+        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.diagnostics.yamllint,
+        null_ls.builtins.diagnostics.jsonlint,
+        -- golang
+        null_ls.builtins.diagnostics.golangci_lint,
+        null_ls.builtins.formatting.gofmt,
+        null_ls.builtins.formatting.goimports,
+        -- lua
+        null_ls.builtins.diagnostics.luacheck,
+        -- protobuf
+        null_ls.builtins.diagnostics.protolint,
+        null_ls.builtins.formatting.protolint,
+    },
+    on_attach = function(client, bufnr)
+        vim.keymap.set('n', '<leader>i', function()
+            local params = util.make_formatting_params({})
+            client.request('textDocument/formatting', params, nil, bufnr)
+        end, { buffer = bufnr, silent = true })
+    end
+}
