@@ -40,3 +40,6 @@ require('nvim-treesitter.configs').setup {
 require('nvim_comment').setup {
     create_mappings = false,
 }
+
+-- vim-test/vim-test
+vim.g['test#strategy'] = "neovim"

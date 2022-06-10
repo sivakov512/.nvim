@@ -22,3 +22,10 @@ map('c', '<C-b>', '<Left>', { noremap = true, silent = false })
 
 map('n', [[<C-\>]], '<cmd>CommentToggle<cr>j', default_opts)
 map('v', [[<C-\>]], [[:CommentToggle<cr>]], default_opts)
+
+map('n', '<C-k>f', [[:TestFile<cr>]], default_opts)
+map('n', '<C-k>l', [[:TestLast<cr>]], default_opts)
+map('n', '<C-k>n', [[:TestNearest<cr>]], default_opts)
+map('n', '<C-k><C-k>', [[:TestNearest<cr>]], default_opts)
+map('n', '<C-k>k', [[:TestNearest<cr>]], default_opts)
+map('n', '<C-k>s', [[:TestSuite<cr>]], default_opts)
