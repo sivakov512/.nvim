@@ -28,7 +28,7 @@ local lsp_on_attach = function(client, bufnr)
     }
 end
 
-for _, lsp in pairs { 'pylsp', 'gopls' } do
+for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer' } do
   require('lspconfig')[lsp].setup {
     on_attach = lsp_on_attach,
     flags = {
@@ -37,7 +37,7 @@ for _, lsp in pairs { 'pylsp', 'gopls' } do
   }
 end
 
-vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
+-- vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
 
 
 local null_ls = require('null-ls')
@@ -48,6 +48,8 @@ null_ls.setup {
         null_ls.builtins.formatting.isort,
         null_ls.builtins.formatting.black,
         null_ls.builtins.diagnostics.mypy,
+        -- rust
+        null_ls.builtins.formatting.rustfmt,
         -- yaml, json
         null_ls.builtins.formatting.prettier,
         null_ls.builtins.diagnostics.yamllint,
