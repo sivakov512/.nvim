@@ -9,6 +9,10 @@ map('n', '<C-f>', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], de
 map('n', '<C-s>', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], default_opts)
 map('n', '<C-e>', [[<cmd>lua require('telescope.builtin').diagnostics()<cr>]], default_opts)
 
+map('n', '<leader>do', [[<cmd>lua vim.diagnostic.open_float()<cr>]], default_opts)
+map('n', '<leader>dn', [[<cmd>lua vim.diagnostic.goto_next()<cr>]], default_opts)
+map('n', '<leader>dp', [[<cmd>lua vim.diagnostic.goto_prev()<cr>]], default_opts)
+
 map('n', '<leader>e', '<cmd>e %:h<cr>', default_opts)
 map('n', ',/', '<cmd>nohlsearch<cr>', default_opts)
 
