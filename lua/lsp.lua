@@ -7,7 +7,7 @@ local lsp_on_attach = function(client, bufnr)
 
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    for _, goto_declaration_cmd in pairs { 'gD', '<C-[>' } do
+    for _, goto_declaration_cmd in pairs { 'gD', '<C-\\>' } do
         nmap(goto_declaration_cmd, vim.lsp.buf.declaration)
     end
     for _, goto_definition_cmd in pairs { 'gd', '<C-]>' } do
