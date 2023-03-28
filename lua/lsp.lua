@@ -33,7 +33,10 @@ for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer' } do
     on_attach = lsp_on_attach,
     flags = {
       debounce_text_changes = 150,
-    }
+    },
+    settings = {
+        ['rust-analyzer'] = {cargo = {buildScripts = {enable = true}}},
+    },
   }
 end
 
