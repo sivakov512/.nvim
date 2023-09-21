@@ -20,6 +20,9 @@ local lsp_on_attach = function(client, bufnr)
     nmap('<leader>rn', vim.lsp.buf.rename)
     nmap('<leader>ca', vim.lsp.buf.code_action)
     nmap('gr', vim.lsp.buf.references)
+    nmap('<leader>i', function()
+        vim.lsp.buf.format { async = true }
+    end, opts)
 
     require('lsp_signature').on_attach {
         handler_opts = {
@@ -39,41 +42,3 @@ for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer' } do
     },
   }
 end
-
--- vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
-
-
-local null_ls = require('null-ls')
-null_ls.setup {
-    temp_dir = '/tmp',
-    sources = {
-        -- python
-        null_ls.builtins.diagnostics.flake8,
-        null_ls.builtins.formatting.isort,
-        null_ls.builtins.formatting.black,
-        null_ls.builtins.diagnostics.mypy,
-        -- rust
-        null_ls.builtins.formatting.rustfmt,
-        -- yaml, json
-        null_ls.builtins.formatting.prettier,
-        null_ls.builtins.diagnostics.yamllint,
-        null_ls.builtins.diagnostics.jsonlint,
-        -- golang
-        null_ls.builtins.diagnostics.golangci_lint,
-        null_ls.builtins.formatting.gofmt,
-        null_ls.builtins.formatting.goimports,
-        -- lua
-        null_ls.builtins.diagnostics.luacheck,
-        -- protobuf
-        null_ls.builtins.diagnostics.buf,
-        null_ls.builtins.formatting.buf,
-        null_ls.builtins.diagnostics.protolint,
-        null_ls.builtins.formatting.protolint,
-    },
-    on_attach = function(client, bufnr)
-        vim.keymap.set('n', '<leader>i', function()
-            local params = util.make_formatting_params({})
-            client.request('textDocument/formatting', params, nil, bufnr)
-        end, { buffer = bufnr, silent = true })
-    end
-}

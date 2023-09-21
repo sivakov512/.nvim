@@ -25,7 +25,6 @@ require('packer').startup(function()
 
     use 'neovim/nvim-lspconfig'
     use 'ray-x/lsp_signature.nvim'
-    use 'jose-elias-alvarez/null-ls.nvim'
     use 'vim-test/vim-test'
 end)
 

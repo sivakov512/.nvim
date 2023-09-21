@@ -30,7 +30,6 @@ opt.completeopt = 'menu'
 
 require('nvim-treesitter.configs').setup {
     ensure_installed = 'all',
-    ignore_install = { 'phpdoc' },
     highlight = { enable = true },
     textobjects = { enable = true },
     indent = { enable = false },  -- https://github.com/nvim-treesitter/nvim-treesitter/issues/1136
