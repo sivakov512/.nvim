@@ -38,7 +38,9 @@ for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer' } do
       debounce_text_changes = 150,
     },
     settings = {
-        ['rust-analyzer'] = {cargo = {buildScripts = {enable = true}}},
+        ['rust-analyzer'] = {
+            cargo = {buildScripts = {enable = true}},
+            check = {allTargets = true, command = 'clippy'}},
     },
   }
 end
