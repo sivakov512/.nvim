@@ -31,16 +31,27 @@ local lsp_on_attach = function(client, bufnr)
     }
 end
 
-for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer' } do
-  require('lspconfig')[lsp].setup {
-    on_attach = lsp_on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    },
-    settings = {
-        ['rust-analyzer'] = {
-            cargo = {buildScripts = {enable = true}},
-            check = {allTargets = true, command = 'clippy'}},
-    },
-  }
+for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer', 'sourcekit' } do
+    local args = {
+        on_attach = lsp_on_attach,
+        flags = {
+            debounce_text_changes = 150,
+        },
+    }
+
+    if (lsp == 'rust_analyzer')
+    then
+        args['settings'] = {
+            ['rust-analyzer'] = {
+                cargo = {buildScripts = {enable = true}},
+                check = {allTargets = true, command = 'clippy'}},
+            }
+
+    elseif (lsp == 'sourcekit')
+    then
+        args['root_dir'] = require('lspconfig').util.root_pattern("Package.swift", ".git", ".")
+
+    end
+
+    require('lspconfig')[lsp].setup(args)
 end
