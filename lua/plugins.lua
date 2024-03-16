@@ -24,6 +24,13 @@ require('packer').startup(function()
     use 'tyru/open-browser.vim'
 
     use 'neovim/nvim-lspconfig'
+    use {
+        'nvimtools/none-ls.nvim',
+        requires = {
+            { 'nvim-lua/plenary.nvim' },
+            { 'nvimtools/none-ls-extras.nvim' },
+        },
+    }
     use 'ray-x/lsp_signature.nvim'
     use 'vim-test/vim-test'
 end)

@@ -21,7 +21,7 @@ local lsp_on_attach = function(client, bufnr)
     nmap('<leader>ca', vim.lsp.buf.code_action)
     nmap('gr', vim.lsp.buf.references)
     nmap('<leader>i', function()
-        vim.lsp.buf.format { async = true }
+        vim.lsp.buf.format ()
     end, opts)
 
     require('lsp_signature').on_attach {
@@ -55,3 +55,30 @@ for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer', 'sourcekit' } do
 
     require('lspconfig')[lsp].setup(args)
 end
+
+local null_ls = require('null-ls')
+ null_ls.setup {
+     temp_dir = '/tmp',
+     sources = {
+         -- python
+         require('none-ls.diagnostics.ruff'),
+         null_ls.builtins.diagnostics.mypy,
+         null_ls.builtins.formatting.black,
+         null_ls.builtins.formatting.isort,
+         -- yaml, json
+         null_ls.builtins.diagnostics.yamllint,
+         null_ls.builtins.formatting.prettier,
+         -- golang
+         null_ls.builtins.diagnostics.golangci_lint,
+         null_ls.builtins.formatting.gofmt,
+         null_ls.builtins.formatting.goimports,
+         -- lua
+         null_ls.builtins.diagnostics.selene,
+         -- protobuf
+         null_ls.builtins.diagnostics.buf,
+         null_ls.builtins.diagnostics.protolint,
+         null_ls.builtins.formatting.buf,
+         null_ls.builtins.formatting.protolint,
+     },
+     on_attach = lsp_on_attach,
+ }
