@@ -29,7 +29,45 @@ opt.completeopt = 'menu'
 
 
 require('nvim-treesitter.configs').setup {
-    ensure_installed = 'all',
+    ensure_installed = {
+        -- Language
+        "bash",
+        "c",
+        "cpp",
+        "go",
+        "javascript",
+        "lua",
+        "lua",
+        "python",
+        "rust",
+        "sql",
+        "swift",
+        "typescript",
+
+        -- Language specific
+        "cmake",
+        "gomod",
+        "gosum",
+
+        -- Formats, tools, instruments
+        "css",
+        "csv",
+        "diff",
+        "dockerfile",
+        "git_config",
+        "gitcommit",
+        "gitignore",
+        "html",
+        "json",
+        "make",
+        "markdown",
+        "scss",
+        "toml",
+        "tsv",
+        "vimdoc",
+        "xml",
+        "yaml",
+    },
     highlight = { enable = true },
     textobjects = { enable = true },
     indent = { enable = false },  -- https://github.com/nvim-treesitter/nvim-treesitter/issues/1136
