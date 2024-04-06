@@ -27,6 +27,8 @@ opt.foldlevel = 99
 
 opt.completeopt = 'menu'
 
+vim.g.netrw_preview = 1
+
 
 require('nvim-treesitter.configs').setup {
     ensure_installed = {
