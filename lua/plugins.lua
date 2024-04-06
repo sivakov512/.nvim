@@ -1,28 +1,16 @@
 require('packer').startup(function()
+    -- Plugin manager
     use 'wbthomason/packer.nvim'
 
+    -- Color theme
     use 'doums/darcula'
 
+    -- Editor improvemenets
     use 'tpope/vim-surround'
     use 'terrortylor/nvim-comment'
     use 'cohama/lexima.vim'
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
-    }
 
-    use 'aklt/plantuml-syntax'
-    use 'weirongxu/plantuml-previewer.vim'
-
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = {
-            { 'nvim-lua/plenary.nvim' },
-            { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-        },
-    }
-    use 'tyru/open-browser.vim'
-
+    -- LSP
     use 'neovim/nvim-lspconfig'
     use {
         'nvimtools/none-ls.nvim',
@@ -32,7 +20,22 @@ require('packer').startup(function()
         },
     }
     use 'ray-x/lsp_signature.nvim'
+
+    -- Extra syntax and languages
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    }
     use 'vim-test/vim-test'
+
+    -- Search and navigation
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {
+            { 'nvim-lua/plenary.nvim' },
+            { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+        },
+    }
 end)
 
 require('telescope').load_extension('fzf')
