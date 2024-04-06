@@ -9,6 +9,17 @@ require('packer').startup(function()
     use 'tpope/vim-surround'
     use 'terrortylor/nvim-comment'
     use 'cohama/lexima.vim'
+    use {
+        'NeogitOrg/neogit',
+        requires = {
+            { 'nvim-lua/plenary.nvim' },
+            { 'sindrets/diffview.nvim' },
+            { 'nvim-telescope/telescope.nvim' },
+        },
+        config = function()
+            require('neogit').setup {}
+        end,
+    }
 
     -- LSP
     use 'neovim/nvim-lspconfig'
