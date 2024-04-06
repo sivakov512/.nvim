@@ -2,7 +2,9 @@ local opt = vim.opt
 local cmd = vim.cmd
 
 
-cmd('colorscheme darcula')
+vim.g.gruvbox_invert_selection = false
+cmd('colorscheme gruvbox')
+
 opt.cursorline = true
 opt.number = true
 opt.relativenumber = true
