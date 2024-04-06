@@ -27,8 +27,6 @@ opt.foldlevel = 99
 
 opt.completeopt = 'menu'
 
-vim.g.netrw_preview = 1
-
 
 require('nvim-treesitter.configs').setup {
     ensure_installed = {
@@ -83,3 +81,11 @@ require('nvim_comment').setup {
 vim.g['test#strategy'] = "neovim"
 
 
+require("oil").setup {
+    columns = {
+        -- "icon",
+        "permissions",
+        "size",
+        "mtime",
+    },
+}

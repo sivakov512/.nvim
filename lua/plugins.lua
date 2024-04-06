@@ -47,6 +47,7 @@ require('packer').startup(function()
             { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
         },
     }
+    use "stevearc/oil.nvim"
 end)
 
 require('telescope').load_extension('fzf')
