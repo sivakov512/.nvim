@@ -13,7 +13,7 @@ map('n', '<leader>do', [[<cmd>lua vim.diagnostic.open_float()<cr>]], default_opt
 map('n', '<leader>dn', [[<cmd>lua vim.diagnostic.goto_next()<cr>]], default_opts)
 map('n', '<leader>dp', [[<cmd>lua vim.diagnostic.goto_prev()<cr>]], default_opts)
 
-map('n', '<leader>g', [[<cmd>lua require('neogit').open({ kind = "vsplit" })<cr>]], default_opts)
+map('n', '<leader>g', [[<cmd>lua require('neogit').open({ kind = "auto" })<cr>]], default_opts)
 
 map('n', '<leader>e', '<cmd>e %:h<cr>', default_opts)
 map('n', ',/', '<cmd>nohlsearch<cr>', default_opts)
