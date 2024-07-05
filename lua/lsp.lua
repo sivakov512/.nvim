@@ -44,7 +44,7 @@ for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer', 'sourcekit' } do
         args['settings'] = {
             ['rust-analyzer'] = {
                 cargo = {buildScripts = {enable = true}},
-                check = {allTargets = true, command = 'clippy'},
+                check = {allTargets = false, command = 'clippy'},
             },
         }
 
