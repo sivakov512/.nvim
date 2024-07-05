@@ -3,7 +3,7 @@ require('packer').startup(function()
     use 'wbthomason/packer.nvim'
 
     -- Color theme
-    use 'morhetz/gruvbox'
+    use 'ellisonleao/gruvbox.nvim'
 
     -- Editor improvemenets
     use 'tpope/vim-surround'

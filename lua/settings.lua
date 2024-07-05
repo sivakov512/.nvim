@@ -2,8 +2,7 @@ local opt = vim.opt
 local cmd = vim.cmd
 
 
-vim.g.gruvbox_invert_selection = false
-cmd('colorscheme gruvbox')
+vim.cmd([[colorscheme gruvbox]])
 
 opt.cursorline = true
 opt.number = true
