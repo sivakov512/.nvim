@@ -27,9 +27,11 @@ local lsp_on_attach = function(client, bufnr)
     require('lsp_signature').on_attach {
         handler_opts = {
             border = 'none',
-        }
+        },
+        hint_prefix = '',
     }
 end
+require("lsp_signature").status_line(80)
 
 for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer', 'sourcekit' } do
     local args = {
