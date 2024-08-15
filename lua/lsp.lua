@@ -33,7 +33,7 @@ local lsp_on_attach = function(client, bufnr)
 end
 require("lsp_signature").status_line(80)
 
-for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer', 'sourcekit' } do
+for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer', 'sourcekit', 'clangd' } do
     local args = {
         on_attach = lsp_on_attach,
         flags = {
@@ -75,6 +75,8 @@ local null_ls = require('null-ls')
          null_ls.builtins.diagnostics.golangci_lint,
          null_ls.builtins.formatting.gofmt,
          null_ls.builtins.formatting.goimports,
+         -- c, cpp
+         null_ls.builtins.formatting.clang_format,
          -- lua
          null_ls.builtins.diagnostics.selene,
          -- protobuf
