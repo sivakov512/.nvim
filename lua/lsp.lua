@@ -33,7 +33,7 @@ local lsp_on_attach = function(client, bufnr)
 end
 require("lsp_signature").status_line(80)
 
-for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer', 'sourcekit', 'clangd' } do
+for _, lsp in pairs { 'clangd', 'gopls', 'lua_ls', 'pylsp', 'rust_analyzer', 'sourcekit' } do
     local args = {
         on_attach = lsp_on_attach,
         flags = {
