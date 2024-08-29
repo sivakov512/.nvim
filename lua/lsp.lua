@@ -59,6 +59,19 @@ for _, lsp in pairs { 'pylsp', 'gopls', 'rust_analyzer', 'sourcekit', 'clangd' }
     require('lspconfig')[lsp].setup(args)
 end
 
+-- Enable snippet expanding when lsp attached
+vim.api.nvim_create_autocmd('LspAttach', {
+    desc = 'Enable vim.lsp.completion',
+    callback = function(event)
+        local client_id = vim.tbl_get(event, 'data', 'client_id')
+        if client_id == nil then
+            return
+        end
+
+        vim.lsp.completion.enable(true, client_id, event.buf, {autotrigger = false})
+    end
+})
+
 local null_ls = require('null-ls')
  null_ls.setup {
      temp_dir = '/tmp',
