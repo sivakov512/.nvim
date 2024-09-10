@@ -1,11 +1,9 @@
-local util = require('vim.lsp.util')
-
-local lsp_on_attach = function(client, bufnr)
+local lsp_on_attach = function(_, bufnr)
     local nmap = function(lhs, rhf)
         vim.keymap.set('n', lhs, rhf, { buffer = bufnr, silent = true, noremap = true })
     end
 
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', { buf = bufnr })
 
     for _, goto_declaration_cmd in pairs { 'gD', '<C-}>' } do
         nmap(goto_declaration_cmd, vim.lsp.buf.declaration)
@@ -21,16 +19,19 @@ local lsp_on_attach = function(client, bufnr)
     nmap('<leader>ca', vim.lsp.buf.code_action)
     nmap('gr', vim.lsp.buf.references)
     nmap('<leader>i', function()
-        vim.lsp.buf.format ()
-    end, opts)
+        vim.lsp.buf.format()
+    end)
 
     require('lsp_signature').on_attach {
+        bind = true,
         handler_opts = {
-            border = 'none',
+            border = 'single',
         },
         hint_prefix = '',
+        padding = ' ',
     }
 end
+
 require("lsp_signature").status_line(80)
 
 for _, lsp in pairs { 'clangd', 'gopls', 'lua_ls', 'pylsp', 'rust_analyzer', 'sourcekit' } do
@@ -40,63 +41,54 @@ for _, lsp in pairs { 'clangd', 'gopls', 'lua_ls', 'pylsp', 'rust_analyzer', 'so
             debounce_text_changes = 150,
         },
     }
-
-    if (lsp == 'rust_analyzer')
+    if (lsp == 'lua_ls')
+    then
+        args['settings'] = {
+            Lua = {
+                completion = { keywordSnippet = "Disable" },
+                runtime = 'LuaJIT',
+                workspace = {
+                    checkThirdParty = "Disable",
+                    library = vim.api.nvim_get_runtime_file("", true)
+                }
+            }
+        }
+    elseif (lsp == 'rust_analyzer')
     then
         args['settings'] = {
             ['rust-analyzer'] = {
-                cargo = {buildScripts = {enable = true}},
-                check = {allTargets = false, command = 'clippy'},
+                cargo = { buildScripts = { enable = true } },
+                check = { allTargets = false, command = 'clippy' },
             },
         }
-
-    elseif (lsp == 'sourcekit')
-    then
-        args['root_dir'] = require('lspconfig').util.root_pattern("Package.swift", ".git", ".")
-
     end
 
     require('lspconfig')[lsp].setup(args)
 end
 
--- Enable snippet expanding when lsp attached
-vim.api.nvim_create_autocmd('LspAttach', {
-    desc = 'Enable vim.lsp.completion',
-    callback = function(event)
-        local client_id = vim.tbl_get(event, 'data', 'client_id')
-        if client_id == nil then
-            return
-        end
-
-        vim.lsp.completion.enable(true, client_id, event.buf, {autotrigger = false})
-    end
-})
-
 local null_ls = require('null-ls')
- null_ls.setup {
-     temp_dir = '/tmp',
-     sources = {
-         -- python
-         require('none-ls.diagnostics.ruff'),
-         null_ls.builtins.diagnostics.mypy,
-         null_ls.builtins.formatting.black,
-         null_ls.builtins.formatting.isort,
-         -- yaml, json
-         null_ls.builtins.diagnostics.yamllint,
-         null_ls.builtins.formatting.prettier,
-         -- golang
-         null_ls.builtins.diagnostics.golangci_lint,
-         null_ls.builtins.formatting.gofmt,
-         null_ls.builtins.formatting.goimports,
-         -- c, cpp
-         null_ls.builtins.formatting.clang_format,
-         -- lua
-         null_ls.builtins.diagnostics.selene,
-         -- protobuf
-         null_ls.builtins.diagnostics.buf,
-         null_ls.builtins.diagnostics.protolint,
-         null_ls.builtins.formatting.buf,
-         null_ls.builtins.formatting.protolint,
-     },
-     on_attach = lsp_on_attach,
- }
+null_ls.setup {
+    temp_dir = '/tmp',
+    sources = {
+        -- python
+        require('none-ls.diagnostics.ruff'),
+        null_ls.builtins.diagnostics.mypy,
+        null_ls.builtins.formatting.black,
+        null_ls.builtins.formatting.isort,
+        -- yaml, json
+        null_ls.builtins.diagnostics.yamllint,
+        null_ls.builtins.formatting.prettier,
+        -- golang
+        null_ls.builtins.diagnostics.golangci_lint,
+        null_ls.builtins.formatting.gofmt,
+        null_ls.builtins.formatting.goimports,
+        -- c, cpp
+        null_ls.builtins.formatting.clang_format,
+        -- protobuf
+        null_ls.builtins.diagnostics.buf,
+        null_ls.builtins.diagnostics.protolint,
+        null_ls.builtins.formatting.buf,
+        null_ls.builtins.formatting.protolint,
+    },
+    on_attach = lsp_on_attach,
+}

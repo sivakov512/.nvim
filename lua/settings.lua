@@ -1,9 +1,6 @@
 local opt = vim.opt
 local cmd = vim.cmd
 
-
-vim.cmd([[colorscheme gruvbox]])
-
 opt.cursorline = true
 opt.number = true
 opt.relativenumber = true
@@ -27,70 +24,3 @@ opt.foldexpr = 'nvim_treesitter#foldexpr()'
 opt.foldlevel = 99
 
 opt.completeopt = 'menu'
-
-
-require('nvim-treesitter.configs').setup {
-    ensure_installed = {
-        -- Language
-        "bash",
-        "c",
-        "cpp",
-        "go",
-        "javascript",
-        "lua",
-        "lua",
-        "python",
-        "rust",
-        "sql",
-        "swift",
-        "typescript",
-
-        -- Language specific
-        "cmake",
-        "gomod",
-        "gosum",
-
-        -- Formats, tools, instruments
-        "css",
-        "csv",
-        "diff",
-        "dockerfile",
-        "git_config",
-        "gitcommit",
-        "gitignore",
-        "html",
-        "json",
-        "make",
-        "markdown",
-        "scss",
-        "toml",
-        "tsv",
-        "vimdoc",
-        "xml",
-        "yaml",
-    },
-    highlight = { enable = true },
-    textobjects = { enable = true },
-}
-
-
-require('nvim_comment').setup {
-    create_mappings = false,
-}
-
--- vim-test/vim-test
-vim.g['test#strategy'] = "neovim"
-
-
-require("oil").setup {
-    columns = {
-        "icon",
-        "permissions",
-        "size",
-        "mtime",
-    },
-    view_options = {
-        -- Show files and directories that start with "."
-        show_hidden = true,
-    },
-}
