@@ -4,7 +4,10 @@ return {
         -- lazy = false,
         priority = 1000,
         config = function()
-            vim.cmd([[colorscheme gruvbox]])
+            require("gruvbox").setup({
+                bold = false
+            })
+            vim.cmd("colorscheme gruvbox")
         end
     },
 }
