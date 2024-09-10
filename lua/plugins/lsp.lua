@@ -3,9 +3,11 @@ return {
     {
         "nvimtools/none-ls.nvim",
         dependencies = {
-            'nvim-lua/plenary.nvim',
-            'nvimtools/none-ls-extras.nvim',
+            "nvim-lua/plenary.nvim",
+            "nvimtools/none-ls-extras.nvim",
         },
     },
-    { "ray-x/lsp_signature.nvim" },
+    {
+        "ray-x/lsp_signature.nvim"
+    },
 }
