@@ -3,7 +3,7 @@ local lsp_on_attach = function(_, bufnr)
         vim.keymap.set("n", lhs, rhf, { buffer = bufnr, silent = true, noremap = true })
     end
 
-    vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", { buf = bufnr })
+    -- vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", { buf = bufnr })
 
     for _, goto_declaration_cmd in pairs { "gD", "<C-}>" } do
         nmap(goto_declaration_cmd, vim.lsp.buf.declaration)
@@ -34,12 +34,14 @@ end
 
 require("lsp_signature").status_line(80)
 
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 for _, lsp in pairs { "clangd", "gopls", "lua_ls", "pylsp", "rust_analyzer", "sourcekit" } do
     local args = {
         on_attach = lsp_on_attach,
         flags = {
             debounce_text_changes = 150,
         },
+        capabilities = capabilities,
     }
     if (lsp == "lua_ls")
     then
@@ -61,6 +63,9 @@ for _, lsp in pairs { "clangd", "gopls", "lua_ls", "pylsp", "rust_analyzer", "so
                 check = { allTargets = false, command = "clippy" },
             },
         }
+    elseif (lsp == "clangd")
+    then
+        args["cmd"] = { "clangd", "--header-insertion=iwyu", "--pretty" }
     end
 
     require("lspconfig")[lsp].setup(args)
