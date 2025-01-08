@@ -1,3 +1,5 @@
+local helpers = require("helpers")
+
 return {
     { "neovim/nvim-lspconfig" },
     {
@@ -29,6 +31,11 @@ return {
                 },
                 formatting = {
                     fields = { "abbr", "kind" },
+                    format = function(entry, item)
+                        helpers.fill_completion_item_details(entry)
+                        helpers.convert_markdown(entry.completion_item.documentation)
+                        return item
+                    end
                 },
                 mapping = cmp.mapping.preset.insert({
                     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
