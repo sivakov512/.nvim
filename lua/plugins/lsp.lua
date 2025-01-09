@@ -164,12 +164,12 @@ return {
         "L3MON4D3/LuaSnip",
         build = "make install_jsregexp",
         config = function()
-            local lusanip = require("luasnip")
+            local luasnip = require("luasnip")
 
             for _, kmp in pairs { "<C-k>", "<Tab>" } do
                 vim.keymap.set({ "i", "s" }, kmp, function()
-                    if lusanip.expand_or_jumpable() then
-                        lusanip.expand_or_jump()
+                    if luasnip.expand_or_jumpable() then
+                        luasnip.expand_or_jump()
                     else
                         return kmp
                     end
@@ -178,17 +178,25 @@ return {
 
             for _, kmp in pairs { "<C-j>", "<S-Tab>" } do
                 vim.keymap.set({ "i", "s" }, kmp, function()
-                    if lusanip.jumpable(-1) then
-                        lusanip.jump(-1)
+                    if luasnip.jumpable(-1) then
+                        luasnip.jump(-1)
                     else
                         return kmp
                     end
                 end, { silent = true, expr = true })
             end
 
+            vim.keymap.set("i", ",", function()
+                if luasnip.jumpable(1) then
+                    luasnip.jump(1)
+                else
+                    return ","
+                end
+            end, { expr = true })
+
             vim.keymap.set({ "i", "s" }, "<C-E>", function()
-                if lusanip.choice_active() then
-                    lusanip.change_choice(1)
+                if luasnip.choice_active() then
+                    luasnip.change_choice(1)
                 end
             end, { silent = true })
         end
