@@ -1,16 +1,98 @@
-local helpers = require("helpers")
+local lsp_on_attach, fill_completion_item_details, convert_markdown = require("helpers").unpack({ "lsp_on_attach",
+    "fill_completion_item_details", "convert_markdown" })
 
 return {
-    { "neovim/nvim-lspconfig" },
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
+        },
+        config = function()
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+            for _, lsp in pairs { "clangd", "gopls", "lua_ls", "pylsp", "rust_analyzer", "sourcekit" } do
+                local args = {
+                    on_attach = lsp_on_attach,
+                    flags = {
+                        debounce_text_changes = 150,
+                    },
+                    capabilities = capabilities,
+                }
+
+                if (lsp == "lua_ls")
+                then
+                    args["settings"] = {
+                        Lua = {
+                            completion = { keywordSnippet = "Disable" },
+                            runtime = "LuaJIT",
+                            workspace = {
+                                checkThirdParty = "Disable",
+                                library = vim.api.nvim_get_runtime_file("", true)
+                            }
+                        }
+                    }
+                elseif (lsp == "rust_analyzer")
+                then
+                    args["settings"] = {
+                        ["rust-analyzer"] = {
+                            cargo = { buildScripts = { enable = true } },
+                            check = { allTargets = false, command = "clippy" },
+                        },
+                    }
+                elseif (lsp == "clangd")
+                then
+                    args["cmd"] = { "clangd", "--header-insertion=iwyu", "--pretty" }
+                end
+
+                require("lspconfig")[lsp].setup(args)
+            end
+        end
+    },
     {
         "nvimtools/none-ls.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvimtools/none-ls-extras.nvim",
         },
+        config = function()
+            local null_ls = require("null-ls")
+            null_ls.setup {
+                temp_dir = "/tmp",
+                sources = {
+                    -- python
+                    require("none-ls.diagnostics.ruff"),
+                    null_ls.builtins.diagnostics.mypy,
+                    null_ls.builtins.formatting.black,
+                    null_ls.builtins.formatting.isort,
+                    -- yaml, json
+                    null_ls.builtins.diagnostics.yamllint,
+                    null_ls.builtins.formatting.prettier,
+                    -- golang
+                    null_ls.builtins.diagnostics.golangci_lint,
+                    null_ls.builtins.formatting.gofmt,
+                    null_ls.builtins.formatting.goimports,
+                    -- c, cpp
+                    null_ls.builtins.formatting.clang_format,
+                    -- protobuf
+                    null_ls.builtins.diagnostics.buf,
+                    null_ls.builtins.diagnostics.protolint,
+                    null_ls.builtins.formatting.buf,
+                    null_ls.builtins.formatting.protolint,
+                },
+                on_attach = lsp_on_attach,
+            }
+        end
     },
     {
-        "ray-x/lsp_signature.nvim"
+        "ray-x/lsp_signature.nvim",
+        opts = {
+            bind = true,
+            handler_opts = {
+                border = "single",
+            },
+            hint_prefix = "",
+            padding = " ",
+        },
     },
     {
         "hrsh7th/nvim-cmp",
@@ -32,8 +114,8 @@ return {
                 formatting = {
                     fields = { "abbr", "kind" },
                     format = function(entry, item)
-                        helpers.fill_completion_item_details(entry)
-                        helpers.convert_markdown(entry.completion_item.documentation)
+                        fill_completion_item_details(entry)
+                        convert_markdown(entry.completion_item.documentation)
                         return item
                     end
                 },
