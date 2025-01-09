@@ -101,14 +101,16 @@ return {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
             "hrsh7th/cmp-cmdline",
+            "L3MON4D3/LuaSnip",
         },
         config = function()
             local cmp = require("cmp")
+            local luasnip = require("luasnip")
 
             cmp.setup({
                 snippet = {
                     expand = function(args)
-                        vim.snippet.expand(args.body)
+                        luasnip.lsp_expand(args.body)
                     end
                 },
                 formatting = {
@@ -119,10 +121,24 @@ return {
                         return item
                     end
                 },
-                mapping = cmp.mapping.preset.insert({
+                mapping = {
                     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-x><C-o>"] = cmp.mapping.complete(),
+                    ["<C-n>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+                    ["<C-p>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
                     ["<C-e>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.abort()
@@ -132,8 +148,9 @@ return {
                     end, { "i", "s" }),
                     ["<CR>"] = cmp.mapping.confirm({ select = true }),
                     ["<Tab>"] = cmp.mapping.confirm({ select = true }),
-                }),
+                },
                 sources = cmp.config.sources({
+                    { name = "luasnip" },
                     { name = "nvim_lsp" },
                     { name = "buffer" },
                 }),
@@ -141,6 +158,39 @@ return {
                     ghost_text = true,
                 },
             })
+        end
+    },
+    {
+        "L3MON4D3/LuaSnip",
+        build = "make install_jsregexp",
+        config = function()
+            local lusanip = require("luasnip")
+
+            for _, kmp in pairs { "<C-k>", "<Tab>" } do
+                vim.keymap.set({ "i", "s" }, kmp, function()
+                    if lusanip.expand_or_jumpable() then
+                        lusanip.expand_or_jump()
+                    else
+                        return kmp
+                    end
+                end, { silent = true, expr = true })
+            end
+
+            for _, kmp in pairs { "<C-j>", "<S-Tab>" } do
+                vim.keymap.set({ "i", "s" }, kmp, function()
+                    if lusanip.jumpable(-1) then
+                        lusanip.jump(-1)
+                    else
+                        return kmp
+                    end
+                end, { silent = true, expr = true })
+            end
+
+            vim.keymap.set({ "i", "s" }, "<C-E>", function()
+                if lusanip.choice_active() then
+                    lusanip.change_choice(1)
+                end
+            end, { silent = true })
         end
     }
 }
