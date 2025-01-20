@@ -71,9 +71,16 @@ return {
     {
         "glepnir/lspsaga.nvim",
         config = function()
+            local lualine = require('lualine')
+            local separator = lualine.get_config().options.component_separators.left or ''
+
             require('lspsaga').setup({
                 lightbulb = { enable = false },
                 ui = { border = "solid" },
+                symbol_in_winbar = {
+                    enable = false,
+                    separator = ' ' .. separator .. ' ',
+                },
             })
 
             map("n", "K", "<cmd>Lspsaga hover_doc<CR>", map_opts)
