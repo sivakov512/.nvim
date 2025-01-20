@@ -10,7 +10,7 @@ return {
         config = function()
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-            for _, lsp in pairs { "clangd", "gopls", "lua_ls", "pylsp", "rust_analyzer", "sourcekit" } do
+            for _, lsp in pairs { "clangd", "gopls", "lua_ls", "pylsp", "rust_analyzer" } do
                 local args = {
                     on_attach = lsp_on_attach,
                     flags = {
