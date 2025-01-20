@@ -28,8 +28,6 @@ opt.completeopt = "menu"
 vim.g.mapleader = [[\]]
 
 map("n", "<leader>do", [[<cmd>lua vim.diagnostic.open_float()<cr>]], map_opts)
-map("n", "<leader>dn", [[<cmd>lua vim.diagnostic.goto_next()<cr>]], map_opts)
-map("n", "<leader>dp", [[<cmd>lua vim.diagnostic.goto_prev()<cr>]], map_opts)
 
 
 map("n", "<leader>e", "<cmd>e %:h<cr>", map_opts)

@@ -9,6 +9,7 @@
   "lazy.nvim": { "branch": "main", "commit": "d8f26efd456190241afd1b0f5235fe6fdba13d4a" },
   "lexima.vim": { "branch": "master", "commit": "f851b232505766aff7bed7d20100ad31c9c0b33b" },
   "lsp_signature.nvim": { "branch": "master", "commit": "5b64964ed02098c85613ee3d20f96bed1dfb64cc" },
+  "lspsaga.nvim": { "branch": "main", "commit": "13b3cdc9a53ec821b9e693ee71501cc2d6cf206c" },
   "neogit": { "branch": "master", "commit": "a1fc4e50fa494e04097cf2d02e86bcd7ac5760d6" },
   "none-ls-extras.nvim": { "branch": "main", "commit": "6557f20e631d2e9b2a9fd27a5c045d701a3a292c" },
   "none-ls.nvim": { "branch": "main", "commit": "eec6019d95353f1706bff07ab4698354d09fe062" },

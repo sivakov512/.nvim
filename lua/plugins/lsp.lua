@@ -1,5 +1,25 @@
-local lsp_on_attach, fill_completion_item_details, convert_markdown = require("helpers").unpack({ "lsp_on_attach",
-    "fill_completion_item_details", "convert_markdown" })
+local fill_completion_item_details, convert_markdown, map, map_opts = require("helpers").unpack({ "lsp_on_attach",
+    "fill_completion_item_details", "convert_markdown", "map", "map_opts" })
+
+local function lsp_on_attach(_, bufnr)
+    local nmap = function(lhs, rhf)
+        vim.keymap.set("n", lhs, rhf, { buffer = bufnr, silent = true, noremap = true })
+    end
+
+    for _, goto_declaration_cmd in pairs { "gD", "<C-}>" } do
+        nmap(goto_declaration_cmd, vim.lsp.buf.declaration)
+    end
+    for _, goto_definition_cmd in pairs { "gd", "<C-]>" } do
+        nmap(goto_definition_cmd, vim.lsp.buf.definition)
+    end
+    nmap("gi", vim.lsp.buf.implementation)
+    nmap("<C-k>", vim.lsp.buf.signature_help)
+    nmap("gt", vim.lsp.buf.type_definition)
+    nmap("<leader>rn", vim.lsp.buf.rename)
+    nmap("<leader>i", function()
+        vim.lsp.buf.format()
+    end)
+end
 
 return {
     {
@@ -46,6 +66,22 @@ return {
 
                 require("lspconfig")[lsp].setup(args)
             end
+        end
+    },
+    {
+        "glepnir/lspsaga.nvim",
+        config = function()
+            require('lspsaga').setup({
+                lightbulb = { enable = false },
+                ui = { border = "solid" },
+            })
+
+            map("n", "K", "<cmd>Lspsaga hover_doc<CR>", map_opts)
+            map("n", "<leader>ca", "<cmd>Lspsaga code_action<cr>", map_opts)
+            map("n", "<leader>dl", "<cmd>Lspsaga show_line_diagnostics<CR>", map_opts)
+            map("n", "<leader>dn", "<cmd>Lspsaga diagnostic_jump_next<CR>", map_opts)
+            map("n", "<leader>dp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", map_opts)
+            map("n", "gr", "<cmd>Lspsaga finder<CR>", map_opts)
         end
     },
     {

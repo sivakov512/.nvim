@@ -57,29 +57,6 @@ function M.fill_completion_item_details(entry)
     end
 end
 
-function M.lsp_on_attach(_, bufnr)
-    local nmap = function(lhs, rhf)
-        vim.keymap.set("n", lhs, rhf, { buffer = bufnr, silent = true, noremap = true })
-    end
-
-    for _, goto_declaration_cmd in pairs { "gD", "<C-}>" } do
-        nmap(goto_declaration_cmd, vim.lsp.buf.declaration)
-    end
-    for _, goto_definition_cmd in pairs { "gd", "<C-]>" } do
-        nmap(goto_definition_cmd, vim.lsp.buf.definition)
-    end
-    nmap("K", vim.lsp.buf.hover)
-    nmap("gi", vim.lsp.buf.implementation)
-    nmap("<C-k>", vim.lsp.buf.signature_help)
-    nmap("gt", vim.lsp.buf.type_definition)
-    nmap("<leader>rn", vim.lsp.buf.rename)
-    nmap("<leader>ca", vim.lsp.buf.code_action)
-    nmap("gr", vim.lsp.buf.references)
-    nmap("<leader>i", function()
-        vim.lsp.buf.format()
-    end)
-end
-
 --
 -- Keymap helpers
 
