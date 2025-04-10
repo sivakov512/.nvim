@@ -14,17 +14,4 @@ return {
         end
     },
     { "cohama/lexima.vim" },
-    {
-        "NeogitOrg/neogit",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "sindrets/diffview.nvim",
-            "nvim-telescope/telescope.nvim",
-        },
-        config = function()
-            require("neogit").setup {}
-
-            map("n", "<leader>g", [[<cmd>lua require("neogit").open({ kind = "tab" })<cr>]], map_opts)
-        end,
-    },
 }
