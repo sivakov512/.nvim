@@ -27,8 +27,6 @@ opt.foldlevel = 99
 opt.completeopt = "menu"
 vim.g.mapleader = [[\]]
 
-map("n", "<leader>do", [[<cmd>lua vim.diagnostic.open_float()<cr>]], map_opts)
-
 
 map("n", "<leader>e", "<cmd>e %:h<cr>", map_opts)
 map("n", ",/", "<cmd>nohlsearch<cr>", map_opts)
