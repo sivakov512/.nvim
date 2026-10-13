@@ -23,6 +23,9 @@ require("lazy").setup({
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
     install = { colorscheme = { "habamax" } },
+    -- Plugins always track latest; plugin branches differ per Neovim version,
+    -- so the lockfile is machine-local instead of committed.
+    lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json",
     checker = {
         enabled = true,
         notify = false,
